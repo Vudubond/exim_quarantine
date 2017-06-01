@@ -1,0 +1,28 @@
+// To create the PNG, either use `seqdiag` or the web demo:
+// http://blockdiag.com/en/seqdiag/demo.html
+seqdiag {
+
+MTA; antivirus; exim; web-quarantine; Recipients;
+autonumber = True;
+
+exim <- MTA;
+exim => antivirus [label = "Scan email"];
+exim --> MTA [failed, label = "Deny with code 550 (fakereject)"];
+
+exim -> exim [label = "Freeze email"];
+exim -> web-quarantine [label = "HTTP upload mbox file"];
+
+web-quarantine -> web-quarantine [label = "MHonArc convert\nmbox to HTML"];
+web-quarantine -> Recipients [label = "Notify original\nrecipient(s) by email", note = "Warning: Each recipients\ncan choose to deliver or\ndrop for all others!"];
+
+=== Wait for recipient(s) action ===
+
+web-quarantine <- Recipients [label = "Choose deliver or drop\nthrough a web form"];
+web-quarantine -> exim [label = "Direct email to origin\nserver via Swaks\n(required action in subject)"];
+web-quarantine -> web-quarantine [label = "Delete\nlocal copy"];
+Recipients <- web-quarantine [label = "Confirmation sent to\nrecipient(s) by email"];
+
+exim -> Recipients [color = green, label = "[action deliver] Unfreeze and deliver email"];
+exim -> exim [color = red, label = "[action drop] Delete frozen\nemail"];
+
+}

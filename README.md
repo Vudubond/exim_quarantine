@@ -83,3 +83,7 @@ sudo crontab -u www-data -l
 0 0 * * *  find /var/www/quarantaine/m/ -mtime +15 -delete >/dev/null
 ```
 
+#### Sequence diagram
+
+![Sequence diagram](sequence.png)
+
