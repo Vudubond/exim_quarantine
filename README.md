@@ -64,7 +64,7 @@ Exim, if 15 days on Web):
 
 ```bash
 sudo crontab -u Debian-exim -l
-# Note: mailq age unit changes from "71h" to "4d".
+# Note: mailq age unit changes after reaching "72h", it then becomes "3d".
 0 1 * * *  TIMEOUT=15; TIMEOUT_UNIT=d; exim -bpr |grep -E "^[[:digit:]]+${TIMEOUT_UNIT}\s" |while read age a msgid b; do if [ "${age/${TIMEOUT_UNIT}}" -gt "${TIMEOUT}" ]; then exim -Mrm "$msgid" >/dev/null; fi; done
 ```
 
