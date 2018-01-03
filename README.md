@@ -81,7 +81,7 @@ Finally, don't forget the cron job to purge the files:
 
 ```bash
 sudo crontab -u www-data -l
-0 0 * * *  find /var/www/quarantaine/m/ -mtime +15 -delete >/dev/null
+0 0 * * *  find /var/www/quarantaine/m/ -mindepth 1 -mtime +15 -delete >/dev/null
 ```
 
 #### Sequence diagram
