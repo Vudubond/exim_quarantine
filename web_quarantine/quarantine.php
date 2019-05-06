@@ -57,7 +57,7 @@ if (isset($_POST["s"]) && isset($_POST["k"]) && $_POST["k"] == sha1($_POST["s"] 
 
     # Did the upload was OK?
     if (isset($_FILES["f"]) && $_FILES["f"]["error"] > 0) {
-        echo _("Error during upload.");
+        echo _("Error " . $_FILES["f"]["error"] . " during web upload. (See https://www.php.net/manual/en/features.file-upload.errors.php)");
 
     } else {
         $name = $_FILES["f"]["name"];
